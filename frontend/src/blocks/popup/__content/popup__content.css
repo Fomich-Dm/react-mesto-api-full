@@ -1,0 +1,27 @@
+.popup__content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 88%;
+  
+}
+
+@media (min-width: 520px) {
+  .popup__content {
+    width: 66%;
+  }
+}
+
+@media (min-width: 720px) {
+  .popup__content {
+    width: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .popup__content {
+    max-width: 430px;
+  }
+}

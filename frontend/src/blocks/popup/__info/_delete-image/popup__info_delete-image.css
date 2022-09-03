@@ -1,0 +1,9 @@
+.popup__info_delete-image {
+  width: 295px;
+}
+
+@media (min-width: 1024px) {
+  .popup__info_delete-image {
+    width: 358px;
+  }
+}

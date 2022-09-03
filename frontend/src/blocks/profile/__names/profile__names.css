@@ -1,0 +1,12 @@
+.profile__names {
+  display: flex;
+  align-items: center;
+  margin-left: 28px;
+  width: 100%;
+}
+
+@media (min-width: 520px) {
+  .profile__names {
+    margin: 0;
+  }
+}

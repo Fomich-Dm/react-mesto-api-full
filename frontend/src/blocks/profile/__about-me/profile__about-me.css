@@ -1,0 +1,25 @@
+.profile__about-me {
+  margin: 7px 0 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (min-width: 520px) {
+  .profile__about-me {
+    font-size: 16px;
+    line-height: 19px;
+ }
+}
+
+@media (min-width: 1024px) {
+  .profile__about-me {
+    font-size: 18px;
+    line-height: 22px;
+ }
+}
