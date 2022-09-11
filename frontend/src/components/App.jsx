@@ -32,23 +32,28 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   useEffect(() => {
+    if (loggedIn) {
+      api
+        .getUserInfo()
+        .then((user) => {
+          setCurrentUser(user.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      api
+        .getAllCards()
+        .then((card) => {
+          setCards(card.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     tokenCheck();
-    api
-      .getUserInfo()
-      .then((date) => {
-        setCurrentUser(date);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    api
-      .getAllCards()
-      .then((date) => {
-        setCards(date);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
 
   const handleRegister = (email, password) => {
@@ -135,32 +140,18 @@ function App() {
     setInfoTooltipOpen(true);
   }
 
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    if (isLiked) {
-      api
-        .deleteLike(card._id, !isLiked)
-        .then((newCard) => {
-          setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      api
-        .putLike(card._id, !isLiked)
-        .then((newCard) => {
-          setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i === currentUser._id);
+
+    api
+      .likeStatus(card._id, !isLiked)
+      .then(({ data: card }) => {
+        setCards((state) => state.map((c) => (c._id === card._id ? card : c)));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleCardDelete(card) {
@@ -178,8 +169,8 @@ function App() {
     setIsLoading(true);
     api
       .editUserInfo(data)
-      .then((date) => {
-        setCurrentUser(date);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopup();
       })
       .catch((err) => {
@@ -194,8 +185,8 @@ function App() {
     setIsLoading(true);
     api
       .editUserAvatar(data)
-      .then((date) => {
-        setCurrentUser(date);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopup();
       })
       .catch((err) => {
@@ -211,7 +202,7 @@ function App() {
     api
       .addNewPlace(data)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
         closeAllPopup();
       })
       .catch((err) => {
@@ -251,6 +242,7 @@ function App() {
                     onEditAvatar={handleEditAvatarClick}
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
+                    loggedIn={loggedIn}
                   />
                   <EditProfilePopup
                     isOpen={isEditProfilePopupOpen}

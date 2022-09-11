@@ -1,5 +1,4 @@
 {
-  "homepage": "https://Fomich-Dm.github.io/mesto-react",
   "name": "mesto-react",
   "version": "0.1.0",
   "private": true,
@@ -15,7 +14,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "npm run build && scp -r ./build/* fomin@130.193.49.32:/home/fomin/frontend",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
