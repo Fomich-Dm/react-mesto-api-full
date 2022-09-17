@@ -1,4 +1,4 @@
-export const BASE_URL = "http://api.mesto.FominDmitriy.nomorepartiesxyz.ru";
+export const BASE_URL = "https://api.mesto.FominDmitriy.nomorepartiesxyz.ru";
 
 const checkResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)

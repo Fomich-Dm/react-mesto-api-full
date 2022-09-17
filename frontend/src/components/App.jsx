@@ -28,6 +28,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const [isInfoTooltip, setIsInfoTooltip] = React.useState(false)
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -62,7 +63,7 @@ function App() {
         setUserData({
           email: data.email,
         });
-        setLoggedIn(true);
+        setIsInfoTooltip(true);
         navigate("/sign-in");
         handleRegisterClick();
       })
@@ -75,10 +76,9 @@ function App() {
   const handleLogin = (email, password) => {
     authorize(email, password)
       .then((res) => {
+        api.setToken(res.token);
         localStorage.setItem("token", res.token);
-        setUserData({
-          email: email,
-        });
+        setUserData({ email: email });
         setLoggedIn(true);
         navigate("/");
       })
@@ -139,7 +139,6 @@ function App() {
   function handleRegisterClick() {
     setInfoTooltipOpen(true);
   }
-
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i === currentUser._id);
@@ -278,7 +277,6 @@ function App() {
                   handleRegister={handleRegister}
                   isOpen={isInfoTooltipOpen}
                   onClose={closeAllPopup}
-                  loggedIn={loggedIn}
                 />
               }
             />
@@ -298,7 +296,7 @@ function App() {
           <InfoTooltip
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopup}
-            loggedIn={loggedIn}
+            isInfoTooltip={isInfoTooltip}
           ></InfoTooltip>
         </div>
       </div>

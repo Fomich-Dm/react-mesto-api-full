@@ -7,6 +7,7 @@ const {
   editUserInfo,
   editUserAvatar,
 } = require('../controllers/users');
+const regEx = require('../utils/constants');
 
 router.get('/', getUsers);
 router.get('/me', getUserInfo);
@@ -23,7 +24,7 @@ router.patch('/me', celebrate({
 }), editUserInfo);
 router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().pattern(/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/),
+    avatar: Joi.string().required().pattern(regEx),
   }),
 }), editUserAvatar);
 
